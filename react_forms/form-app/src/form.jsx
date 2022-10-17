@@ -6,11 +6,30 @@ function Form() {
     name: "",
     email: "",
     phoneNumber: "",
-    phoneType: "home",
+    phoneType: "",
     staff: "",
     bio: "",
     notifications: ""
   });
+
+  const [errors, setErrors] = useState([]);
+
+  const validates = () => {
+    let errors = [];
+    if(user.name.length === 0){
+      errors.push("Name cannot be blank");
+    } 
+    if(user.email.length === 0) {
+      errors.push("Email cannot be blank");
+    }
+    if(user.phoneType === "" && user.phoneNumber.length > 0) {
+      errors.push("Must specify phone type");
+    }
+    if(user.bio.length > 280) {
+      errors.push("Bio cannot exceed 280 characters");
+    }
+    return errors;
+  }
 
   const handleChange = (incomingKey) => {
     return (e) => {
@@ -24,7 +43,23 @@ function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(e);
-    console.log(user)
+    console.log(user);
+    let errors = validates();
+    if(errors.length) {
+      setErrors(errors);
+    }
+  }
+
+  const showErrors = () => {
+    if(!errors.length) {
+      return null;
+    } else {
+      return (
+        <ul>
+          {errors.map((error, i) => <li key={i}>{error}</li>)}
+        </ul>
+      )
+    }
   }
 
   return (
@@ -35,15 +70,16 @@ function Form() {
         <br />
         <br />
         <label htmlFor="email">Email: </label>
-        <input type="text" value={user.email} name="email" placeholder="Email" id="email" onChange={handleChange("email")} />
+        <input type="email" value={user.email} name="email" placeholder="Email" id="email" onChange={handleChange("email")} />
         <br />
         <br />
         <label htmlFor="phone-number">Phone Number: </label>
-        <input type="text" value={user.phoneNumber} name="phone-number" placeholder="Phone Number" id="phone-number" onChange={handleChange("phoneNumber")} />
+        <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value={user.phoneNumber} name="phone-number" placeholder="123-456-7890" id="phone-number" onChange={handleChange("phoneNumber")} />
         <br />
         <br />
         <label htmlFor="phone-type">Phone type: </label>
         <select name="phone-type" value={user.phoneType} id="phone-type" onChange={handleChange("phoneType")}>
+          <option value="" disabled>Select Phone Type</option>
           <option value="home" >Home</option>
           <option value="work" >Work</option>
           <option value="mobile" >Mobile</option>
@@ -67,6 +103,7 @@ function Form() {
         <button>Submit</button>
 
       </form>
+      {showErrors()}
     </>
   )
 }
