@@ -6,7 +6,7 @@ function Form() {
     name: "",
     email: "",
     phoneNumber: "",
-    phoneType: "",
+    phoneType: "home",
     staff: "",
     bio: "",
     notifications: ""
@@ -24,6 +24,7 @@ function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(e);
+    console.log(user)
   }
 
   return (
@@ -42,16 +43,16 @@ function Form() {
         <br />
         <br />
         <label htmlFor="phone-type">Phone type: </label>
-        <select name="phone-type" id="phone-type">
-          <option value="home">Home</option>
-          <option value="work">Work</option>
-          <option value="mobile">Mobile</option>
+        <select name="phone-type" value={user.phoneType} id="phone-type" onChange={handleChange("phoneType")}>
+          <option value="home" >Home</option>
+          <option value="work" >Work</option>
+          <option value="mobile" >Mobile</option>
         </select>
         <br />
         <br />
         <label htmlFor="staff">Staff: </label>
-        <input type="radio" value="instructor" name="staff" placeholder="Staff" id="staff"/>Instructor
-        <input type="radio" value="student" name="staff" placeholder="Staff" id="staff"/>Student
+        <input type="radio" value="instructor" onChange={handleChange("staff")} name="staff" placeholder="Staff" id="staff"/>Instructor
+        <input type="radio" value="student" onChange={handleChange("staff")} name="staff" placeholder="Staff" id="staff"/>Student
         <br />
         <br />
         <label htmlFor="bio">Bio: </label>
@@ -59,8 +60,8 @@ function Form() {
         <br />
         <br />
         <label htmlFor="notifications">Sign up for Notifications?</label>
-        <input type="checkbox" id="notifications" name="notifications" value="yes"/>Yes
-        <input type="checkbox" id="notifications" name="notifications" value="no"/>No
+        <input type="checkbox" id="notifications" onChange={handleChange("notifications")} name="notifications" value="yes"/>Yes
+        <input type="checkbox" id="notifications" onChange={handleChange("notifications")} name="notifications" value="no"/>No
         <br />
         <br />
         <button>Submit</button>
