@@ -7,16 +7,22 @@ import { useState } from "react";
 function ProductView({ products }) {
 
   const [sideOpen, setSideOpen] = useState(true);
-  const [selectedProduct, setSelectedProduct] = useState({})
+  const [selectedProduct, setSelectedProduct] = useState()
 
   useEffect(() => {
-    setSideOpen(true);
+    // console.log(`selectedProduct CHANGED TO`, selectedProduct);
+    if (selectedProduct){
+      setSideOpen(true);
+    }
   }, [selectedProduct]);
 
   useEffect(() => {
-    setSelectedProduct({});
+    
+    if (!sideOpen){
+      setSelectedProduct();
+    }
   }, [sideOpen]);
-
+  console.log("re-render Product View")
   return (
     <div className="product-view">
       <div className="product-main-area">

@@ -1,6 +1,8 @@
 import React from 'react'
 
 function ProductDetails({ product, visible }) {
+  console.log("re-render Product Details")
+
   if (!visible) return null
 
   if (!product) return (
