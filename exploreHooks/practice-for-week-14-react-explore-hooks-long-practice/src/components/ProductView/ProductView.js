@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProductListItem from "../ProductListItem";
 import ProductDetails from "../ProductDetails";
 import './ProductView.css';
@@ -8,6 +8,14 @@ function ProductView({ products }) {
 
   const [sideOpen, setSideOpen] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState({})
+
+  useEffect(() => {
+    setSideOpen(true);
+  }, [selectedProduct]);
+
+  useEffect(() => {
+    setSelectedProduct({});
+  }, [sideOpen]);
 
   return (
     <div className="product-view">
@@ -20,8 +28,6 @@ function ProductView({ products }) {
               product={item}
               onClick={() => {
                 setSelectedProduct(item)
-                // console.log(item)
-                // console.log(selectedProduct)
               }
             }
             isSelected={item === selectedProduct}
@@ -32,7 +38,9 @@ function ProductView({ products }) {
       <div className="product-side-panel">
         <div className="product-side-panel-toggle-wrapper">
           <div className="product-side-panel-toggle"
-              onClick={() => setSideOpen(!sideOpen)}>
+              onClick={() => {
+                setSideOpen(!sideOpen);
+                }}>
             {sideOpen ? '>' : '<'}
           </div>
         </div>
