@@ -20,10 +20,11 @@ function ProductView({ products }) {
               product={item}
               onClick={() => {
                 setSelectedProduct(item)
-                console.log(selectedProduct)
-                console.log(item)
+                // console.log(item)
+                // console.log(selectedProduct)
               }
             }
+            isSelected={item === selectedProduct}
             />
           )}
         </div>
@@ -35,7 +36,7 @@ function ProductView({ products }) {
             {sideOpen ? '>' : '<'}
           </div>
         </div>
-        <ProductDetails visible={sideOpen} />
+        <ProductDetails product={selectedProduct} visible={sideOpen} />
       </div>
     </div>
   );
